@@ -44,6 +44,43 @@ bool addToHead(struct point** head, int x, int y)
     return res;
 }
 
+//Добваить в хвост
+bool addToTail(struct point** head, int x, int y)
+{
+    bool res = false;
+
+    if (head)
+    {
+        struct point *new_tail = (struct point*)malloc(sizeof(struct point));
+
+        if (new_tail)
+        {
+            new_tail -> x = x;
+            new_tail -> y = y;
+            new_tail -> next = NULL;
+            new_tail -> prev = NULL;
+
+            if (*head)
+            {
+                struct point *curr;
+
+                for (curr = *head; curr -> next; curr = curr -> next);
+
+                curr -> next = new_tail;
+                new_tail -> prev = curr;
+            }
+            else
+            {
+                *head = new_tail;
+            }
+
+            res = true;
+        }
+    }
+
+    return res;
+}
+
 //Вывод содержимого списка
 void printList(struct point* head)
 {
@@ -77,8 +114,11 @@ int main()
 
     printf("\n");
 
-    bool check = addToHead(&list_head, 21, 23);
-    check = addToHead(&list_head, 22, 28);
+    //bool check = addToHead(&list_head, 21, 23);
+    //check = addToHead(&list_head, 22, 28);
+
+    addToTail(&list_head, 45, 33);
+    addToTail(&list_head, 48, 36);
 
     printList(list_head);
 
