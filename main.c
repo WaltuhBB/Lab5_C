@@ -437,6 +437,25 @@ void delNode(struct point** head, int x, int y)
     }
 }
 
+//Очистка списка
+void clearList(struct point** head)
+{
+    if (head && *head)
+    {
+        struct point *ptrIx = *head;
+        struct point *tmp;
+
+        while (ptrIx)
+        {
+            tmp = ptrIx -> next;
+            
+            free(ptrIx);
+            ptrIx = tmp;
+        }
+
+        *head = NULL;
+    }
+}
 
 int main()
 {
@@ -483,6 +502,12 @@ int main()
     //delNode(&list_head, 124, 155);
     //delNode(&list_head, 45, 33);
     //delNode(&list_head, 1000, 903);
+
+    printList(list_head);
+
+    clearList(&list_head);
+
+    printf("\n");
 
     printList(list_head);
 
