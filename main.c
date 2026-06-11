@@ -81,6 +81,77 @@ bool addToTail(struct point** head, int x, int y)
     return res;
 }
 
+//Добавление на позицию
+bool addAtPos(struct point** head, int x, int y, size_t pos)
+{
+    bool res = false;
+
+    if (head)
+    {
+        struct point *new_el = (struct point*)malloc(sizeof(struct point));
+
+        if (new_el)
+        {
+            new_el -> x = x;
+            new_el -> y = y;
+            new_el -> next = NULL;
+            new_el -> prev = NULL;
+            
+            if (*head)
+            {
+                struct point *curr;
+                size_t i = 0;
+
+                for (curr = *head; curr -> next && i != pos; curr = curr -> next)
+                {
+                    i++;
+                }
+
+                if (i == pos)
+                {
+                    if (i == 0)
+                    {
+                        new_el -> next = *head;
+                        (*head) -> prev = new_el;
+                        *head = new_el;
+                    }
+                    else
+                    {
+                        new_el -> next = curr;
+                        new_el -> prev = curr -> prev;
+                        
+                        curr = new_el -> prev;
+                        curr -> next = new_el;
+
+                        curr = new_el -> next;
+                        curr -> prev = new_el;
+                    }
+
+                    res = true;
+                }
+                else
+                {
+                    //curr -> next = new_el;
+                    //new_el -> prev = curr;
+
+                    free(new_el);
+                    res = false;
+                }
+            }
+            else
+            {
+                *head = new_el;
+
+                res = true;
+            }
+
+            //res = true;
+        }
+    }
+
+    return res;
+}
+
 //Вывод содержимого списка
 void printList(struct point* head)
 {
@@ -114,11 +185,15 @@ int main()
 
     printf("\n");
 
-    //bool check = addToHead(&list_head, 21, 23);
-    //check = addToHead(&list_head, 22, 28);
+    addToHead(&list_head, 21, 23);
+    addToHead(&list_head, 22, 28);
 
     addToTail(&list_head, 45, 33);
     addToTail(&list_head, 48, 36);
+
+    addAtPos(&list_head, 124, 155, 0);
+    //addAtPos(&list_head, 124, 155, 2);
+    //addAtPos(&list_head, 124, 155, 100);
 
     printList(list_head);
 
