@@ -395,6 +395,49 @@ void delAtPos(struct point** head, size_t pos)
     }
 }
 
+//Удаление по данным
+void delNode(struct point** head, int x, int y)
+{
+    if (head && *head)
+    {
+        struct point *curr;
+    
+        for (curr = *head; curr -> next && !(curr -> x == x && curr -> y == y); curr = curr -> next);
+
+        if (curr -> x == x && curr -> y == y)
+        {
+            if (curr -> prev == NULL)
+            {
+                struct point *tmp = *head;
+            
+                if (tmp -> next == NULL)
+                {
+                    *head = NULL;
+                }
+                else
+                {
+                    *head = tmp -> next;
+                    (*head) -> prev = NULL;
+                }
+
+                free(tmp);
+            }
+            else
+            {
+                curr -> prev -> next = curr -> next;
+
+                if (curr -> next != NULL)
+                {
+                    curr -> next -> prev = curr -> prev;
+                }
+
+                free(curr);
+            }
+        }
+    }
+}
+
+
 int main()
 {
     struct point *list_head = NULL;
@@ -436,6 +479,10 @@ int main()
     //delAtPos(&list_head, 0);
     //delAtPos(&list_head, 3);
     //delAtPos(&list_head, 6);
+
+    //delNode(&list_head, 124, 155);
+    //delNode(&list_head, 45, 33);
+    //delNode(&list_head, 1000, 903);
 
     printList(list_head);
 
