@@ -326,6 +326,28 @@ void delHead(struct point** head)
     }
 }
 
+//Удаление хвоста
+void delTail(struct point** head)
+{
+    if (head && *head)
+    {
+        struct point *curr;
+
+        for (curr = *head; curr -> next; curr = curr -> next);
+
+        if (curr -> prev == NULL)
+        {
+            *head = NULL;
+        }
+        else
+        {
+            curr -> prev -> next = NULL;
+        }
+
+        free(curr);
+    }
+}
+
 int main()
 {
     struct point *list_head = NULL;
@@ -360,6 +382,7 @@ int main()
     //printf("\n");
 
     //delHead(&list_head);
+    //delTail(&list_head);
 
     printList(list_head);
 
