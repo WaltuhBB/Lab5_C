@@ -348,6 +348,53 @@ void delTail(struct point** head)
     }
 }
 
+//Удаление по позиции
+void delAtPos(struct point** head, size_t pos)
+{
+    if (head && *head)
+    {
+        struct point *curr;
+        size_t i = 0;
+
+        for (curr = *head; curr -> next && i < pos; curr = curr -> next)
+        {
+            i++;
+        }
+
+        if (i == pos)
+        {
+            if (i == 0)
+            {
+                struct point *tmp = *head;
+        
+                if (tmp -> next == NULL)
+                {
+                    *head = NULL;
+                }
+                else
+                {
+                    *head = tmp -> next;
+                    (*head) -> prev = NULL;
+                }
+
+                free(tmp);
+            }
+            else
+            {
+                curr -> prev -> next = curr -> next;
+
+                if (curr -> next != NULL)
+                {
+                    curr -> next -> prev = curr -> prev;
+                }
+
+                free(curr);
+            }
+        }
+
+    }
+}
+
 int main()
 {
     struct point *list_head = NULL;
@@ -379,10 +426,16 @@ int main()
     //printList(find(list_head, 1000, 903));
     //printList(find(list_head, 334874987, 12954376));
 
+    //printList(list_head);
+
     //printf("\n");
 
     //delHead(&list_head);
     //delTail(&list_head);
+
+    //delAtPos(&list_head, 0);
+    //delAtPos(&list_head, 3);
+    //delAtPos(&list_head, 6);
 
     printList(list_head);
 
