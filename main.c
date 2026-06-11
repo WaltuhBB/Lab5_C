@@ -305,6 +305,27 @@ void printList(struct point* head)
     }
 }
 
+//Удаление головы
+void delHead(struct point** head)
+{
+    if (head && *head)
+    {
+        struct point *tmp = *head;
+        
+        if (tmp -> next == NULL)
+        {
+            *head = NULL;
+        }
+        else
+        {
+            *head = tmp -> next;
+            (*head) -> prev = NULL;
+        }
+
+        free(tmp);
+    }
+}
+
 int main()
 {
     struct point *list_head = NULL;
@@ -337,6 +358,8 @@ int main()
     //printList(find(list_head, 334874987, 12954376));
 
     //printf("\n");
+
+    //delHead(&list_head);
 
     printList(list_head);
 
