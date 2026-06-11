@@ -260,6 +260,26 @@ bool addAfter(struct point** head, int x, int y, int x_data, int y_data)
     return res;
 }
 
+//Поиск узла
+struct point* find(struct point* head, int x, int y)
+{
+    struct point *res = NULL;
+
+    if (head)
+    {
+        struct point *curr;
+
+        for (curr = head; curr -> next && !(curr -> x == x && curr -> y == y); curr = curr -> next);
+
+        if (curr -> x == x && curr -> y == y)
+        {
+            res = curr;
+        }
+    }
+
+    return res;
+}
+
 //Вывод содержимого списка
 void printList(struct point* head)
 {
@@ -310,6 +330,13 @@ int main()
     //addAfter(&list_head, 1000, 903, 124, 155);
     //addAfter(&list_head, 1000, 903, 21, 23);
     addAfter(&list_head, 1000, 903, 48, 36);
+    
+    //printList(find(list_head, 124, 155));
+    //printList(find(list_head, 45, 33));
+    //printList(find(list_head, 1000, 903));
+    //printList(find(list_head, 334874987, 12954376));
+
+    //printf("\n");
 
     printList(list_head);
 
