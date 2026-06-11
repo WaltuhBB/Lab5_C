@@ -195,6 +195,65 @@ bool addBefore(struct point** head, int x, int y, int x_data, int y_data)
                     free(new_el);
                 }
             }
+            else
+            {
+                free(new_el);
+            }
+        }
+    }
+
+    return res;
+}
+
+//Добавить после узла
+bool addAfter(struct point** head, int x, int y, int x_data, int y_data)
+{
+    bool res = false;
+
+    if (head)
+    {
+        struct point *new_el = (struct point*)malloc(sizeof(struct point));
+
+        if (new_el)
+        {
+            new_el -> x = x;
+            new_el -> y = y;
+            new_el -> next = NULL;
+            new_el -> prev = NULL;
+
+            if (*head)
+            {
+                struct point *curr;
+
+                for (curr = *head; curr -> next && !(curr -> x == x_data && curr -> y == y_data); curr = curr -> next);
+
+                if (curr -> x == x_data && curr -> y == y_data)
+                {
+                    if (curr -> next == NULL)
+                    {
+                        curr -> next = new_el;
+                        new_el -> prev = curr;
+                    }
+                    else
+                    {
+                        new_el -> prev = curr;
+                        new_el -> next = curr -> next;
+
+                        curr -> next -> prev = new_el;
+                        curr -> next = new_el;
+                    }
+                    
+                    res = true;
+                }
+                else
+                {
+                    free(new_el);
+                }
+            }
+            else
+            {
+                free(new_el);
+            }
         }
     }
 
@@ -247,6 +306,10 @@ int main()
     //addBefore(&list_head, 403, 408, 124, 155);
     //addBefore(&list_head, 403, 408, 21, 23);
     addBefore(&list_head, 403, 408, 48, 36);
+
+    //addAfter(&list_head, 1000, 903, 124, 155);
+    //addAfter(&list_head, 1000, 903, 21, 23);
+    addAfter(&list_head, 1000, 903, 48, 36);
 
     printList(list_head);
 
